@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1060832442287",
+    "firebase_url": "https://peace-4c764.firebaseio.com",
+    "project_id": "peace-4c764",
+    "storage_bucket": "peace-4c764.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060832442287:android:214e58456ddf4ef4",
+        "android_client_info": {
+          "package_name": "com.example.calvindong.peace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060832442287-aus6kfc6sagqkq2c0vtmoiaehm5erfp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpqKRcO3yOVKm_If3qzZGxEYfDPWENDkI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
