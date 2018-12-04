@@ -14,7 +14,7 @@
         android:layout_gravity="left|top"
 
         android:scaleType="fitXY"
-        android:src="@drawable/Group" />
+        android:src="@drawable/group" />
 
     <TextView
         android:id="@+id/datee"
