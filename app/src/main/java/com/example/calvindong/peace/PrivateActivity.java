@@ -1,6 +1,7 @@
 package com.example.calvindong.peace;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.NavigationView;
@@ -126,6 +127,11 @@ public class PrivateActivity extends AppCompatActivity implements NavigationView
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
                 ((TextView)popupWindow.getContentView().findViewById(R.id.orig)).setText(cpyj);
                 ((TextView)popupWindow.getContentView().findViewById(R.id.help)).setText(cpyk);
+
+                ((Button)popupWindow.getContentView().findViewById(R.id.delt)).setBackgroundColor(Color.parseColor("#FF9494"));
+                ((Button)popupWindow.getContentView().findViewById(R.id.delt)).setTextColor(Color.parseColor("#883939"));
+                ((Button)popupWindow.getContentView().findViewById(R.id.throww)).setBackgroundColor(Color.parseColor("#C8F58F"));
+                ((Button)popupWindow.getContentView().findViewById(R.id.throww)).setTextColor(Color.parseColor("#5A7D59"));
                 ((Button)popupWindow.getContentView().findViewById(R.id.delt)).setOnClickListener(new View.OnClickListener() {
                     @Override
 

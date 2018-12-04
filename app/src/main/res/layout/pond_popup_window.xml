@@ -42,12 +42,19 @@
             android:id="@+id/throww"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Throw in River" />
+            android:text="Throw in River"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            />
 
         <Button
             android:id="@+id/delt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Delete" />
     </LinearLayout>
 
