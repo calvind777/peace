@@ -77,7 +77,7 @@ public class PrivateActivity extends AppCompatActivity implements NavigationView
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int count = 0;
                 int leftStart = 450;
-                int topStart = 700;
+                int topStart = 850;
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     Log.d("valll",messageSnapshot.getValue().toString());
                     generateFlower(messageSnapshot.getKey().toString(),messageSnapshot.getValue().toString(), leftStart,topStart);
@@ -85,12 +85,12 @@ public class PrivateActivity extends AppCompatActivity implements NavigationView
                     topStart += 150;
                     count++;
                     if ((count*1.0) / 3 == 1) {
-                        topStart = 750;
+                        topStart = 850;
                         leftStart = 300;
                     }
 
                     if ((count*1.0) / 3 == 2) {
-                        topStart = 750;
+                        topStart = 850;
                         leftStart = 600;
                     }
 
