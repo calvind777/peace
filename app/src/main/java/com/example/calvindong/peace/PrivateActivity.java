@@ -1,34 +1,32 @@
 package com.example.calvindong.peace;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,31 +34,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class PrivateActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_private);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.bringToFront();
+
 
 
         //
@@ -72,20 +69,29 @@ public class MainActivity extends AppCompatActivity
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        DatabaseReference msgs = database.getReference("messages");
+        DatabaseReference msgs = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         msgs.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int count = 0;
-                int leftStart = 350;
-                int topStart = 350;
+                int leftStart = 450;
+                int topStart = 700;
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
                     Log.d("valll",messageSnapshot.getValue().toString());
                     generateFlower(messageSnapshot.getKey().toString(),messageSnapshot.getValue().toString(), leftStart,topStart);
                     leftStart += 15;
                     topStart += 150;
                     count++;
+                    if ((count*1.0) / 3 == 1) {
+                        topStart = 750;
+                        leftStart = 300;
+                    }
+
+                    if ((count*1.0) / 3 == 2) {
+                        topStart = 750;
+                        leftStart = 600;
+                    }
 
                 }
                 Log.d("count", count+"");
@@ -100,14 +106,10 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
-
-
-
     }
 
     public void generateFlower(String j, String k, int leftMargin, int topMargin) {
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.constraintLayout1);
         ImageButton flower = new ImageButton(this);
         final String cpyj = j;
         final String cpyk = k;
@@ -115,15 +117,47 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 LayoutInflater inflater = (LayoutInflater)
                         getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_window, null);
+                View popupView = inflater.inflate(R.layout.pond_popup_window, null);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                ((TextView)popupWindow.getContentView().findViewById(R.id.original)).setText(cpyj);
-                ((TextView)popupWindow.getContentView().findViewById(R.id.helpful)).setText(cpyk);
+                ((TextView)popupWindow.getContentView().findViewById(R.id.orig)).setText(cpyj);
+                ((TextView)popupWindow.getContentView().findViewById(R.id.help)).setText(cpyk);
+                ((Button)popupWindow.getContentView().findViewById(R.id.delt)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+
+                        public void onClick(View v) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference();
+                        DatabaseReference msgs = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        String text = ((TextView) popupWindow.getContentView().findViewById(R.id.orig)).getText().toString();
+                        Log.d("thisis", text);
+                        msgs.child(text).setValue(null);
+                        startActivity(getIntent());
+                        finish();
+                    }
+                });
+
+                ((Button)popupWindow.getContentView().findViewById(R.id.throww)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+
+                    public void onClick(View v) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference();
+                        DatabaseReference msgs = database.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        String text = ((TextView) popupWindow.getContentView().findViewById(R.id.orig)).getText().toString();
+                        String help = ((TextView) popupWindow.getContentView().findViewById(R.id.help)).getText().toString();
+                        myRef.child("messages").child(text).setValue(help);
+                    }
+                });
+
+
+
+
+
 
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window tolken
@@ -138,7 +172,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         flower.setBackgroundResource(R.drawable.flower);
-        flower.setId(R.id.constraintLayout+234125+leftMargin);
+        flower.setId(R.id.constraintLayout1+234125+leftMargin);
         layout.addView(flower);
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
@@ -157,38 +191,8 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        DatabaseReference msgs = database.getReference("messages");
-
-        msgs.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int count = 0;
-                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    Log.d("valll",messageSnapshot.getValue().toString());
-                    count++;
-
-                }
-                Log.d("count", count+"");
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -241,20 +245,8 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public void onPostClicked(View v) {
-        //start post activity
-        Intent i = new Intent(this, PostActivity.class);
-        startActivity(i);
-    }
-
-    public void onPrivateClicked(View v) {
-        Intent i = new Intent(this, PrivateActivity.class);
-        startActivity(i);
-    }
-
 }

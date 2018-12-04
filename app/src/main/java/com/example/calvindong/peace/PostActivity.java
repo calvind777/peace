@@ -36,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,14 +53,19 @@ public class PostActivity extends AppCompatActivity
         setContentView(R.layout.activity_post);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout2);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view2);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
+
+
+
         final TextView date = findViewById(R.id.dateText);
         EditText edit = findViewById(R.id.editText2);
         Date currentDate = new java.util.Date();
@@ -159,7 +165,15 @@ public class PostActivity extends AppCompatActivity
                                     Log.d("woo", positiveTextCopy);
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = database.getReference();
-                                    myRef.child("messages").child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                    if (inputString.charAt(inputString.length()-1) == '.') {
+                                        myRef.child("messages").child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                    } else {
+                                        myRef.child("messages").child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                    }
+
+
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -168,6 +182,26 @@ public class PostActivity extends AppCompatActivity
                             cancelbutton.setText("Store in Pond");
                             cancelbutton.setBackgroundColor(Color.parseColor("#C4E1EE"));
                             cancelbutton.setTextColor(Color.parseColor("#5F8BBB"));
+                            cancelbutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.d("woo", inputString);
+                                    Log.d("woo", positiveTextCopy);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference();
+                                    if (inputString.charAt(inputString.length()-1) == '.') {
+                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        //myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                    } else {
+                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        //myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                    }
+
+
+                                    Intent intent = new Intent(getApplicationContext(), PrivateActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
 
 
                         } catch (Exception e) {
@@ -191,7 +225,7 @@ public class PostActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout2);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -226,22 +260,25 @@ public class PostActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Log.d("navreached", "hi");
+        if (id == R.id.nav_river) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_pond) {
+            Intent i = new Intent(this, PrivateActivity.class);
+            startActivity(i);
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_flower) {
+            Intent i = new Intent(this, PostActivity.class);
+            startActivity(i);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_about) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_help) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout2);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

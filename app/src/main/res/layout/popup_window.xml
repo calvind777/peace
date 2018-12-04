@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    android:background="@android:drawable/dialog_holo_light_frame">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textSize="22sp"
+        android:textColor="#444444"
+        android:text="Sun December 2, 2018"/>
+
+    <TextView
+        android:id="@+id/original"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+
+        android:text="hi this is the start"
+        android:textColor="#777777" />
+
+    <TextView
+        android:id="@+id/helpful"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:text="hi this is the start"
+        android:textColor="#6A96CA" />
+
+
+
+
+</LinearLayout>
