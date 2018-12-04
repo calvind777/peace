@@ -157,6 +157,9 @@ public class PrivateActivity extends AppCompatActivity implements NavigationView
                         String text = ((TextView) popupWindow.getContentView().findViewById(R.id.orig)).getText().toString();
                         String help = ((TextView) popupWindow.getContentView().findViewById(R.id.help)).getText().toString();
                         myRef.child("messages").child(text).setValue(help);
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+
                     }
                 });
 

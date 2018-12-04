@@ -167,10 +167,10 @@ public class PostActivity extends AppCompatActivity
                                     DatabaseReference myRef = database.getReference();
                                     if (inputString.charAt(inputString.length()-1) == '.') {
                                         myRef.child("messages").child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
-                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        //myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString.substring(0, inputString.length() - 1)).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
                                     } else {
                                         myRef.child("messages").child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
-                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
+                                        //myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(inputString).setValue(positiveTextCopy.substring(0,positiveTextCopy.length() - 1));
                                     }
 
 
