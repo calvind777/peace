@@ -255,4 +255,15 @@ public class PrivateActivity extends AppCompatActivity implements NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onRiverClicked(View v) {
+        //start post activity
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
+    public void onPostFlowerClicked(View v) {
+        Intent i = new Intent(this, PostActivity.class);
+        startActivity(i);
+    }
 }

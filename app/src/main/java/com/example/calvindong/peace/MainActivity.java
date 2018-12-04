@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+
                 ((TextView)popupWindow.getContentView().findViewById(R.id.original)).setText(cpyj);
                 ((TextView)popupWindow.getContentView().findViewById(R.id.helpful)).setText(cpyk);
 

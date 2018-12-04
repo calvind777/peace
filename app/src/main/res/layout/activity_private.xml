@@ -31,6 +31,49 @@
         android:layout_height="match_parent">
 
 
+        <ImageButton
+            android:id="@+id/imageButtonFlower"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="352dp"
+            android:layout_marginStart="352dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/ic_post_btn"
+            android:contentDescription="asdf"
+            android:maxHeight="68dp"
+            android:maxWidth="62dp"
+            android:minHeight="66dp"
+            android:minWidth="61dp"
+            android:onClick="onPostFlowerClicked"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageButtonRiver"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="260dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="260dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/public_btn"
+            android:contentDescription="asdf"
+            android:onClick="onRiverClicked"
+            android:maxHeight="68dp"
+            android:maxWidth="62dp"
+            android:minHeight="66dp"
+            android:minWidth="61dp"
+
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonFlower"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
     </android.support.constraint.ConstraintLayout>

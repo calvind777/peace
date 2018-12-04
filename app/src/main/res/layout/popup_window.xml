@@ -8,13 +8,22 @@
 
     android:background="@android:drawable/dialog_holo_light_frame">
 
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="left|top"
+
+        android:scaleType="fitXY"
+        android:src="@drawable/Group" />
+
     <TextView
+        android:id="@+id/datee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:textSize="22sp"
+        android:text="Sun December 2, 2018"
         android:textColor="#444444"
-        android:text="Sun December 2, 2018"/>
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/original"
