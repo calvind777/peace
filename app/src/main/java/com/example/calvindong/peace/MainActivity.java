@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity
         if (user == null) {
             startActivityForResult(
                     AuthUI.getInstance()
-                            .createSignInIntentBuilder()
+                            .createSignInIntentBuilder().setIsSmartLockEnabled(false)
                             .setAvailableProviders(providers)
                             .build(),
                     123);
 
-        }
+        } 
 
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -128,8 +128,7 @@ public class MainActivity extends AppCompatActivity
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                startActivity(getIntent());
-                finish();
+
 
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -292,5 +291,12 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(this, PrivateActivity.class);
         startActivity(i);
     }
+
+    public void onWindmillClicked(View v) {
+        finish();
+        startActivity(getIntent());
+    }
+
+
 
 }
